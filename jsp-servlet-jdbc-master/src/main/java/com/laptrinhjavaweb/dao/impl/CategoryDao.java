@@ -2,6 +2,8 @@ package com.laptrinhjavaweb.dao.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +32,53 @@ public class CategoryDao implements ICategoryDao {
 		String sql = "SELECT * FROM category";
 		//open connection
 		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		if(connection != null)
 		{
+			try {
+				statement = connection.prepareStatement(sql);
+				resultSet = statement.executeQuery();
+				while(resultSet.next())
+				{
+					CategoryModel  category = new CategoryModel();
+					category.setId(resultSet.getLong("id"));
+					category.setCode(resultSet.getString("code"));
+					category.setName(resultSet.getString("name"));
+					results.add(category);
+					
+				}
+				
+				return results;
+				
+			} catch (SQLException e) {
+				return null;
+			}
+			finally
+			{
+				try {
+					if(connection != null)
+					{
+						connection.close();
+					}
+					if(statement != null)
+					{
+						statement = null;
+					}
+					if(resultSet != null)
+					{
+						resultSet = null;
+					}
+					
+				} catch (SQLException e2) {
+					return null;
+				}
+				
+			}
 			
 		}
-		return results;
+		
+		return null;
 	}
 	
 }
