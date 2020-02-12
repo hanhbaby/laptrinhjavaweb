@@ -31,7 +31,7 @@ public class NewAPI extends HttpServlet {
 		response.setContentType("application/json");
 		NewModel newModel =  HttpUtil.of(request.getReader()).toModel(NewModel.class);
 		newModel.setCreatedBy(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
-		newModel = newService.save(newModel);
+	//	newModel = newService.save(newModel);
 		mapper.writeValue(response.getOutputStream(), newModel);
 	}
 	
@@ -42,7 +42,7 @@ public class NewAPI extends HttpServlet {
 		response.setContentType("application/json");
 		NewModel updateNew =  HttpUtil.of(request.getReader()).toModel(NewModel.class);
 		updateNew.setModifiedBy(((UserModel) SessionUtil.getInstance().getValue(request, "USERMODEL")).getUserName());
-		updateNew = newService.update(updateNew);
+		//updateNew = newService.update(updateNew);
 		mapper.writeValue(response.getOutputStream(), updateNew);
 	}
 	
@@ -52,7 +52,7 @@ public class NewAPI extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		NewModel newModel =  HttpUtil.of(request.getReader()).toModel(NewModel.class);
-		newService.delete(newModel.getIds());
+		//newService.delete(newModel.getIds());
 		mapper.writeValue(response.getOutputStream(), "{}");
 	}
 }

@@ -1,4 +1,4 @@
-package dao.laptrinhjavaweb.service;
+package com.laptrinhjavaweb.service;
 
 import java.util.List;
 

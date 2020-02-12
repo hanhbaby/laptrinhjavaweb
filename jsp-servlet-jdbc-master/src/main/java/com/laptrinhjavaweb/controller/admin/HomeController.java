@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.laptrinhjavaweb.service.ICategoryService;
+import com.laptrinhjavaweb.service.ICategoryService;
 
 @WebServlet(urlPatterns = {"/admin-home"})
 public class HomeController extends HttpServlet {
