@@ -27,11 +27,11 @@ ALTER TABLE user ADD CONSTRAINT fk_user_role FOREIGN KEY (roleid) REFERENCES rol
 
 CREATE TABLE news(
 id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
-titile  VARCHAR(255) NULL,
-thumbnail VARCHAR(150) NOT NULL,
-shortdecriptsion TEXT NOT NULL,
-content TEXT NOT NULL,
+title  VARCHAR(255) NULL,
 categoryid bigint NOT NULL,
+thumbnail VARCHAR(150) NULL,
+shortdecriptsion TEXT NULL,
+content TEXT NULL,
 createddate TIMESTAMP NULL,
 modifeddate TIMESTAMP NULL,
 createdby VARCHAR(255) NULL,
