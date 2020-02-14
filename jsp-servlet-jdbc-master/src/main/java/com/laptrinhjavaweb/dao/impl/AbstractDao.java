@@ -35,7 +35,7 @@ public class AbstractDao<T> implements GenericDao<T>{
 		try {
 			connection = getConnection();
 			statement = connection.prepareStatement(sql);
-			// set parameter
+			setParameter(statement,parameters);
 			resultSet = statement.executeQuery();
 			while(resultSet.next())
 			{
@@ -66,6 +66,30 @@ public class AbstractDao<T> implements GenericDao<T>{
 			}
 			
 		}
+		
+	}
+
+	private void setParameter(PreparedStatement statement, Object... parameters) 
+	{
+		try{
+			for(int i =0; i< parameters.length; i++)
+			{
+				Object parameter = parameters[i];
+				int index = i +1;
+				if(parameter instanceof Long )
+				{
+					statement.setLong(index,(Long) parameter);
+				}
+				else if(parameter instanceof String)
+				{
+					statement.setString(index, (String) parameter);
+				}
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
 		
 	}
 
