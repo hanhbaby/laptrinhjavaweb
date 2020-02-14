@@ -17,5 +17,11 @@ public class NewService implements INewService
 	public List<NewModel> findByCategoryId(Long categoryID) {
 		return newDao.findByCategoryId(categoryID);
 	}
+
+	@Override
+	public NewModel save(NewModel newModel) {
+		
+		return null;
+	}
 	
 }

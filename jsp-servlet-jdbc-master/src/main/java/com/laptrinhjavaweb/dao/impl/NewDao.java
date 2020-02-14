@@ -15,6 +15,12 @@ public class NewDao extends AbstractDao<NewModel> implements INewDao
 		return query(sql, new NewMapper(), categoryId);
 		
 	}
+
+	@Override
+	public Long save(NewModel newModel) {
+		
+		return null;
+	}
 	
 
 }
