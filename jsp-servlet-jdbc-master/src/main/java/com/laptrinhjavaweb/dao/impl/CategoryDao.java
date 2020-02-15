@@ -21,7 +21,12 @@ public class CategoryDao implements ICategoryDao {
 			String user = "root";
 			String password = "1234";
 			return DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException e)//| SQLException e
+		{
+			return null;
+		}
+		catch (SQLException e)
+		{
 			return null;
 		}
 
