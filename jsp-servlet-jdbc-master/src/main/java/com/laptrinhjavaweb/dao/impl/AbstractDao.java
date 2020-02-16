@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class AbstractDao<T> implements GenericDao<T>{
 	{
 		try {
 			Class.forName("com.mysql.jdbc.driver");
-			String url = "jdbc:mysql://localhost:3306/newsqlservlet02102020";
+			String url = "jdbc:mysql://localhost:3306/jspservletjdbc;";
 			String user = "root";
 			String password = "1234";
 			return DriverManager.getConnection(url, user, password);
@@ -85,6 +87,12 @@ public class AbstractDao<T> implements GenericDao<T>{
 				else if(parameter instanceof String)
 				{
 					statement.setString(index, (String) parameter);
+				}else if(parameter instanceof Integer)
+				{
+					statement.setInt(index, (int) parameter);
+				}else if(parameter instanceof Timestamp)
+				{
+					statement.setTimestamp(index, (Timestamp) parameter);
 				}
 			}
 		}catch(SQLException e)
@@ -92,6 +100,91 @@ public class AbstractDao<T> implements GenericDao<T>{
 			e.printStackTrace();
 		}
 		
+		
+	}
+
+	@Override
+	public void update(String sql, Object... parameters) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		try {
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			statement = connection.prepareStatement(sql);
+			setParameter(statement, parameters);
+			statement.executeUpdate();
+			connection.commit();
+		}catch(SQLException e)
+		{
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally
+		{
+			try {
+				if(connection != null)
+				{
+					connection.close();
+				}
+				if(statement != null)
+				{
+					statement = null;
+				}
+			}catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+	}
+
+	@Override
+	public Long insert(String sql, Object... parameters) {
+		ResultSet resultSet = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		try {
+			Long id = null;
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			setParameter(statement, parameters);
+			statement.executeUpdate();
+			resultSet = statement.getGeneratedKeys();
+			if(resultSet.next())
+			{
+				id = resultSet.getLong(1);
+			}
+			connection.commit();
+			return id;
+		}catch(SQLException e)
+		{
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally
+		{
+			try {
+				if(connection != null)
+				{
+					connection.close();
+				}
+				if(statement != null)
+				{
+					statement = null;
+				}
+				if(resultSet != null)
+				{
+					resultSet = null;
+				}
+			}catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return null;
 		
 	}
 
