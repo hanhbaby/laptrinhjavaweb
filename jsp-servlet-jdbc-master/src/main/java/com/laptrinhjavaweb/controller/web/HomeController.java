@@ -17,7 +17,7 @@ import com.laptrinhjavaweb.service.INewService;
 
 @WebServlet(urlPatterns = { "/trang-chu" })
 public class HomeController extends HttpServlet {
-	
+
 	@Inject
 	private ICategoryService categoryService;
 
@@ -27,9 +27,23 @@ public class HomeController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		try {
+			System.out.print(categoryService.findAll());
 		request.setAttribute("categories", categoryService.findAll());
-		RequestDispatcher rd = request.getRequestDispatcher("/views/login.jsp");
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		//RequestDispatcher rd = request.getRequestDispatcher("/views/login.jsp");
+		//rd.forward(request, response);
+		
+		
+		//
+		RequestDispatcher rd = request.getRequestDispatcher("/views/home.jsp");
 		rd.forward(request, response);
+		
+		
+		
 
 	}
 

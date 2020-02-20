@@ -17,8 +17,8 @@ public class AbstractDao<T> implements GenericDao<T>{
 	public Connection getConnection()
 	{
 		try {
-			Class.forName("com.mysql.jdbc.driver");
-			String url = "jdbc:mysql://localhost:3306/jspservletjdbc;";
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/jspservletjdbc?useSSL=false";
 			String user = "root";
 			String password = "1234";
 			return DriverManager.getConnection(url, user, password);
@@ -44,7 +44,13 @@ public class AbstractDao<T> implements GenericDao<T>{
 			while(resultSet.next())
 			{
 				results.add(rowMapper.mapRow(resultSet));
+				System.out.println(" ---- ");
+				System.out.println("EmpName : " + resultSet.getString("id"));
+		          System.out.println("EmpId : " + resultSet.getString("name"));
+		          
 			}
+			
+			System.out.print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
 			return 	results;
 		}catch(SQLException e)
 		{
@@ -55,6 +61,7 @@ public class AbstractDao<T> implements GenericDao<T>{
 				if(connection != null)
 				{
 					connection.close();
+					System.out.print("zzzzzzzzzzzzzzzzzzzzzzzzzzzwdasfwwe	er	wrwzzzzzzzzzz");
 				}
 				if(statement != null)
 				{
